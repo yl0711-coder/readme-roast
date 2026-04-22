@@ -35,12 +35,17 @@ def main(argv: list[str] | None = None) -> int:
         action="store_true",
         help="Return exit code 1 when findings are present.",
     )
+    parser.add_argument(
+        "--readme",
+        default="README.md",
+        help="README file name to inspect. Defaults to README.md.",
+    )
 
     args = parser.parse_args(argv)
     root = Path(args.path).resolve()
 
     try:
-        report = ReadmeScanner(root).scan()
+        report = ReadmeScanner(root, readme_name=args.readme).scan()
     except FileNotFoundError as error:
         print(f"readme-roast: {error}", file=sys.stderr)
         return 2
@@ -58,4 +63,3 @@ def main(argv: list[str] | None = None) -> int:
         return 1
 
     return 0
-

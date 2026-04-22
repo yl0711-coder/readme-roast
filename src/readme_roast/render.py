@@ -13,6 +13,14 @@ ROAST_LINES = [
     "the README and the repository are no longer on speaking terms",
 ]
 
+MAINTENANCE_AURAS = [
+    "optimistic chaos",
+    "unfinished genius",
+    "heroic improvisation",
+    "post-release denial",
+    "high-confidence drift",
+]
+
 
 class RoastRenderer:
     def render(self, report: Report) -> str:
@@ -23,6 +31,10 @@ class RoastRenderer:
                 "This README appears to describe reality.\n"
             )
 
+        drama = min(100, 35 + len(report.findings) * 11)
+        confidence = max(12, 92 - len(report.findings) * 9)
+        aura = MAINTENANCE_AURAS[len(report.findings) % len(MAINTENANCE_AURAS)]
+
         lines = [
             "README Roast",
             "",
@@ -32,6 +44,9 @@ class RoastRenderer:
             "Verdict:",
             f"- {ROAST_LINES[len(report.findings) % len(ROAST_LINES)]}",
             f"- findings: {len(report.findings)}",
+            f"- confidence without evidence: {confidence}%",
+            f"- documentation drama: {drama}%",
+            f"- maintenance aura: {aura}",
             "",
             "Highlights:",
         ]
@@ -41,6 +56,16 @@ class RoastRenderer:
 
         if len(report.findings) > 8:
             lines.append(f"- plus {len(report.findings) - 8} more reality issues")
+
+        lines.extend(
+            [
+                "",
+                "Advice:",
+                "- open the README and the repository side by side",
+                "- remove claims that no longer exist",
+                "- make the docs slightly less ambitious than the code",
+            ]
+        )
 
         return "\n".join(lines).rstrip() + "\n"
 
@@ -88,4 +113,3 @@ class JsonRenderer:
             "value": finding.value,
             "message": finding.message,
         }
-

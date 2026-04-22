@@ -54,7 +54,16 @@ class ReadmeScannerTest(unittest.TestCase):
 
             self.assertEqual([], report.findings)
 
+    def test_supports_custom_readme_name(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "README.zh-CN.md").write_text("`missing/path.md`\n", encoding="utf-8")
+
+            report = ReadmeScanner(root, readme_name="README.zh-CN.md").scan()
+
+            self.assertEqual(1, len(report.findings))
+            self.assertEqual("missing/path.md", report.findings[0].value)
+
 
 if __name__ == "__main__":
     unittest.main()
-

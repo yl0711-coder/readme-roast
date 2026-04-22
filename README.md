@@ -69,6 +69,7 @@ bin/readme-roast
 bin/readme-roast --mode review
 bin/readme-roast --json
 bin/readme-roast --strict
+bin/readme-roast --readme README.zh-CN.md --mode review
 bin/readme-roast /path/to/repo --mode review --strict
 ```
 
