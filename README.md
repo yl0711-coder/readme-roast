@@ -33,7 +33,7 @@ This project turns that pain into a fun local tool.
 
 ## Status
 
-Current version: `v0.1.0`
+Current version: `v0.1.1`
 
 First version scope:
 
@@ -42,6 +42,8 @@ First version scope:
 - no remote link validation
 - no package-manager-specific checks yet
 - no automatic fixes
+
+Version `v0.1.1` also understands local links with fragments or query strings, such as `CHANGELOG.md#v011---2026-05-08`, and ignores non-file links such as `mailto:`.
 
 ## Good Fit
 
@@ -82,15 +84,9 @@ Exit codes:
 ## What It Checks
 
 - local Markdown links such as `[Changelog](CHANGELOG.md)`
+- local Markdown links with anchors such as `[Changelog](CHANGELOG.md#v011---2026-05-08)`
 - obvious inline path references such as `` `scripts/dev.py` ``
 - project tree entries inside README code blocks
-
-## Non-Goals
-
-- full Markdown parsing
-- HTTP link checking
-- package metadata validation
-- auto-fixing documentation drift
 
 ## Development
 

@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 from pathlib import Path
+from urllib.parse import unquote, urlsplit
 
 from .models import Finding, Report
 
@@ -94,7 +95,8 @@ class ReadmeScanner:
         ]
 
     def _exists(self, target: str) -> bool:
-        candidate = (self.root / target).resolve()
+        normalized = self._normalize_local_target(target)
+        candidate = (self.root / normalized).resolve()
 
         try:
             candidate.relative_to(self.root.resolve())
@@ -105,12 +107,17 @@ class ReadmeScanner:
 
     @staticmethod
     def _skip_target(target: str) -> bool:
-        return (
-            target.startswith("http://")
-            or target.startswith("https://")
-            or target.startswith("#")
-            or "://" in target
-        )
+        parsed = urlsplit(target)
+
+        if parsed.scheme:
+            return True
+
+        return target.startswith("#")
+
+    @staticmethod
+    def _normalize_local_target(target: str) -> str:
+        parsed = urlsplit(target)
+        return unquote(parsed.path)
 
     @staticmethod
     def _looks_like_path(value: str) -> bool:

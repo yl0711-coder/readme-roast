@@ -64,6 +64,23 @@ class ReadmeScannerTest(unittest.TestCase):
             self.assertEqual(1, len(report.findings))
             self.assertEqual("missing/path.md", report.findings[0].value)
 
+    def test_handles_fragments_queries_and_non_file_links(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            (root / "docs").mkdir()
+            (root / "docs" / "setup.md").write_text("# setup\n", encoding="utf-8")
+            (root / "README.md").write_text(
+                "[Setup](docs/setup.md#install)\n"
+                "[Raw setup](docs/setup.md?plain=1)\n"
+                "[Email](mailto:maintainer@example.com)\n"
+                "[Phone](tel:+10000000000)\n",
+                encoding="utf-8",
+            )
+
+            report = ReadmeScanner(root).scan()
+
+            self.assertEqual([], report.findings)
+
 
 if __name__ == "__main__":
     unittest.main()

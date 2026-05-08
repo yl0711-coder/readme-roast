@@ -27,7 +27,7 @@ README Roast 把这个问题做成一个本地可运行的小工具。
 
 ## 状态
 
-当前版本：`v0.1.0`
+当前版本：`v0.1.1`
 
 第一版范围：
 
@@ -36,6 +36,8 @@ README Roast 把这个问题做成一个本地可运行的小工具。
 - 不检查远程链接
 - 暂不做包管理器元数据检查
 - 不自动修复
+
+`v0.1.1` 也能正确处理 `CHANGELOG.md#v011---2026-05-08` 这类带锚点或查询参数的本地链接，并忽略 `mailto:` 这类非文件链接，减少误报。
 
 ## 使用
 
@@ -57,6 +59,7 @@ bin/readme-roast /path/to/repo --mode review --strict
 ## 检查内容
 
 - 本地 Markdown 链接，例如 `[Changelog](CHANGELOG.md)`
+- 带锚点的本地 Markdown 链接，例如 `[Changelog](CHANGELOG.md#v011---2026-05-08)`
 - 明显的反引号路径，例如 `` `scripts/dev.py` ``
 - README 代码块中的项目树条目
 

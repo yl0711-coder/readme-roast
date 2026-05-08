@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "readme-roast"
-version = "0.1.0"
+version = "0.1.1"
 description = "Roast README drift or report it strictly."
 readme = "README.md"
 requires-python = ">=3.9"
@@ -29,4 +29,3 @@ readme-roast = "readme_roast.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
-
