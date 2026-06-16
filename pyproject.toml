@@ -24,6 +24,11 @@ classifiers = [
     "Topic :: Utilities"
 ]
 
+[project.urls]
+Homepage = "https://github.com/yl0711-coder/readme-roast"
+Repository = "https://github.com/yl0711-coder/readme-roast"
+Issues = "https://github.com/yl0711-coder/readme-roast/issues"
+
 [project.scripts]
 readme-roast = "readme_roast.cli:main"
 

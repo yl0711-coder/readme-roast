@@ -64,6 +64,26 @@ Run it against intentionally messy repositories and produce:
 - a roast screenshot
 - a strict report screenshot
 
+## Requirements
+
+- Python 3.9 or later
+- No network access and no third-party runtime dependency
+
+## Installation
+
+Run directly from a clone:
+
+```bash
+bin/readme-roast
+```
+
+Or install the package locally if your Python environment has packaging tools available:
+
+```bash
+python -m pip install -e .
+readme-roast --mode review
+```
+
 ## Usage
 
 ```bash
@@ -81,6 +101,48 @@ Exit codes:
 - `1`: findings present in `--strict` mode
 - `2`: invalid input such as missing `README.md`
 
+## Example Output
+
+Roast mode against a README that drifted from its repository:
+
+```text
+README Roast
+
+Verdict:
+- this README believes in folders that no longer exist
+- findings: 5
+- confidence without evidence: 47%
+- documentation drama: 90%
+- maintenance aura: optimistic chaos
+
+Highlights:
+- line 3: local link target "docs/guide.md" does not exist
+- line 3: local link target "CHANGELOG.md" does not exist
+- line 5: referenced path "scripts/dev.sh" does not exist
+- line 9: project tree entry "src/" does not exist
+- line 10: project tree entry "missing_dir/" does not exist
+
+Advice:
+- open the README and the repository side by side
+- remove claims that no longer exist
+- make the docs slightly less ambitious than the code
+```
+
+The same drift in `--mode review --strict` (CI-friendly, exits `1`):
+
+```text
+README Review
+
+Findings:
+- line 3 [link] local link target "docs/guide.md" does not exist
+- line 3 [link] local link target "CHANGELOG.md" does not exist
+- line 5 [path] referenced path "scripts/dev.sh" does not exist
+- line 9 [tree] project tree entry "src/" does not exist
+- line 10 [tree] project tree entry "missing_dir/" does not exist
+
+Result: failed
+```
+
 ## What It Checks
 
 - local Markdown links such as `[Changelog](CHANGELOG.md)`
@@ -94,3 +156,7 @@ Exit codes:
 PYTHONPATH=src python -m unittest discover -s tests
 bin/readme-roast --mode review --strict
 ```
+
+## License
+
+MIT
